@@ -1,0 +1,26 @@
+﻿Graffiti conjecture 194 (2 students)
+
+This computer generated conjecture claims that:
+every simple connected graph G on n ≥ 2 vertices satisfying α(G) ≤ 1 + λ_avg(v) has a Hamiltonian path.
+Test the conjecture in various ways for small and big graphs. You can also use some metaheuristic
+to test for larger graphs.
+Some comments:
+1.
+α(G)is the independence number of a graph, i.e., the maximum number of vertices such that no
+two are adjacent.
+2.
+λ(v)is the local independence of a vertex v, i.e.. the independence number of the subgraph induced
+by the neighbors of vertex v.  The average of λ(v), also denoted λ_avg(v), is the average of all local
+independence number of the vertices of the graph.
+3.  
+A graph has a Hamiltonian path if there exist two vertices with a path between them which visits
+each vertex of the graph exactly once.
+
+GC 194
+Ta računalniško generirana konjektura trdi:
+Vsak preprost, povezan graf G na n ≥ 2 vozliščih, ki zadošča α(G) ≤ 1 + λ_avg(v), ima hamiltonsko pot.
+
+Komentarji:
+1. α(G) je neodvistnostno število grafa, torej največje število vozlišč, od katerih nista nobeni sosednji.
+2. λ(v) je lokalna neodvistnost grafa, torej α(G) podgrafa, ki ga določajo sosednja vozlišča vozlišča v. Z λ_avg(v) označimo povprečno λ(v) grafa G.
+3. Graf ima hamiltonsko pot, če obstajata dve vozlišči, ki ju povezuje pot, ki natančno enkrat obišče vsako vozlišče grafa.
