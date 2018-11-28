@@ -1,0 +1,16 @@
+﻿Ideja najine naloge je torej, da ali na dovolj velikem številu grafov konjekturo potrdiva,
+ali pa najdeva protiprimer, ki jo ovrže.
+
+
+-Potrebujemo program, ki bo generiral vse grafe, ki imajo prave lastnosti.
+	--Zahteva bo torej, da bomo imeli 2 ali več vozlišči.
+	--Graf bo povezan in enostaven.
+	--Veljala bo neenakost α(G) ≤ 1 + λ_avg(v).
+
+-Program bo te grafe zgeneriral prek matrike sosednjosti, nato pa pretvoril še v seznam sosedov
+-Hamiltonsko pot bo poizkusil poiskati na prvih dveh vozliščih iz seznama (ni pomembno kateri dve sta)
+-Program bo vrnil TRUE, če bo držalo, in FALSE, če najdemo protiprimer
+
+-Če bo vrnil FALSE, smo dokazali, da konjuktura ne drži; če vrne TRUE gremo naprej
+
+Za velike grafe se bomo poslužili metahevristike.
