@@ -1,0 +1,18 @@
+def generiraj_graf(graf):
+    povezava = []
+    for vozlisce in graf:
+        for sosed in graf[vozlisce]:
+            povezava.append((vozlisce, sosed))
+
+    return povezava
+
+print(generiraj_graf(graf))
+
+
+def nepovezano(graf):
+    """ Vrne nepovezana vozlišèa, èe so naš ne zanima"""
+    izolirano = []
+    for vozlisce in graf:
+        if not graf[vozlisce]:
+            izolirano += vozlisce
+    return izolirano
