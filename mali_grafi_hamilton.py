@@ -20,14 +20,11 @@ def hamiltonska_pot(G,zacetno_vozlisce):
     Ce graf neenakosti ne zadosca, nam funkcija vrne Ta graf nas ne zanima,
     drugace se izvede program.
     """
-    if neenakost(G) == False
-        return "Ta graf nas ne zanima"
-    else:
-        zaporedje = [zacetno_vozlisce]
-        #izbrisi_element_iz_vseh_gesel(G, zacetno_vozlisce)
-        seznam = G[zacetno_vozlisce]
-        for sosed in seznam:
-            zaporedje.append(sosed)
-            izbrisi_element_iz_vseh_gesel(G, sosed)
-            
+    zaporedje = [zacetno_vozlisce]
+    #izbrisi_element_iz_vseh_gesel(G, zacetno_vozlisce)
+    seznam = G[zacetno_vozlisce]
+    for sosed in seznam:
+        zaporedje.append(sosed)
+        izbrisi_element_iz_vseh_gesel(G, sosed)
+
 
