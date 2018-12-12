@@ -1,0 +1,29 @@
+% 115 120
+\documentclass[12pt,a4paper]{amsart}
+% ukazi za delo s slovenscino -- izberi kodiranje, ki ti ustreza
+\usepackage[slovene]{babel}
+%\usepackage[cp1250]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{url}
+%\usepackage[normalem]{ulem}
+\usepackage[dvipsnames,usenames]{color}
+
+\begin{document}
+\title{Grafitti Conjecturre 194}
+Za predmet Finančni praktikum v študijskem letu $2018/19$ Martin Praček in Mela Malej dobila nalogo predstaviti problem Grafittijeve konjekuture $194$. \\
+\ \\
+\section{Predstavitev problema}
+Grafittijeva konjektura 194 nam zastavi vprašanje iz teorije grafov.Zanima nas, ali za vsak graf, za ki zadošča pogoju, velja, da obstaja hamiltonska pot. Gre za računalniško generirano trditev, pri kateri nas zanima, ali lahko najdemo protiprimer.\\
+Naš pogoj pa izgleda tako:
+$$ \alpha(G) \leq 1 + \lambda_{avg}(G),$$
+kjer je $G$ naš graf, $\alpha(G)$ je neodvistnostno število, $\lambda_{avg}$ pa je povprečna lokalna neodvistnost grafa.\\
+Neodvistnostno število grafa $\alpha(G)$ nam pove moč največje množice, ki vsebuje  vozlišča grafa $G$, od katerih nobeni dve niste sosednji.\\
+Lokalna neodvistnost grafa $\lambda(G, v)$ nam pove neodvistnostno število podgrafa $Gv$ grafa $G$, kjer je $Gv$ definiran na sosedih vozlišča $v$. $\lambda_{avg}(G)$ nam pove povprečno lokalno neodvistnost.\\
+Graf ima hamiltonsko pot, če obstajata dve vozlišči, ki ju povezuje pot, ki natančno enkrat obišče vsako vozlišče grafa.\\
+\ \\
+Najina naloga je torej na dovolj velikem vzorcu grafov pokazati da to velja, ali pa dobiti protiprimer, ki bo dokazal da to ne drži.\\
+\section{Dosedanje delo}
+\section{Prihodnje delo}
+\end{document}
