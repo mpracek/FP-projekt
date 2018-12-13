@@ -36,6 +36,14 @@ Najina naloga je torej na dovolj velikem vzorcu grafov pokazati da to velja, ali
 Do sedaj sva začela s pisanjem kode, ki bo preverjala majhne grafe, torej do približno $30$ vozlišč. Za tako ločnico sva se odločila zaradi nekaj NP-težkih problemov, s katerimi morava v najini seminarski nalogi delati. Pri tem izstopata predvsem problem Hamiltonske poti, ter določitev neodvistnostega števila grafa. \\
 Problem neodvistnostnega števila grafa za male grafe sva rešila z zaenkrat še nedelujočo kodo v datotekah \begin{verbatim}dodatna_pomoc_mali_grafi.py\end{verbatim} ter \begin{verbatim}mali_grafi_neenakost.py\end{verbatim}. Tu sva uporabila iterativni postopek, kjer sva določila potenčno množico vseh možnih naborov vozlišč grafa, in nato ugotovila velikost največje množice, katere elementi med seboj niso sosedi.\\
 Še večji problem predstavlja problem Hamiltonske poti, ki sva jo delno rešila za male grafe v \begin{verbatim}mali_grafi_hamilton.py\end{verbatim}, vendar najine kode še nisva dokončala. \\
-Delo, ki sva ga do sedaj naredila, temelji predvsem na algoritmih za manjše grafe. Začela sva z generatorjem manjših grafov, ki nam bo generiral vse grafe določene velikosti. Nato bodo ti grafi šli skozi dodatna testiranja, da bomo preverili, ali zadoščajo pogojem, določenim s definicijo problema. 
+
+Delo, ki sva ga do sedaj naredila, temelji predvsem na algoritmih za manjše grafe. Najin program se bo izvedel v \begin{verbatim}
+izvaja_mali_grafi.py
+\end{verbatim}, ki bo v vseboval zgolj eno funkcijo z eno for zanko, ki bo šla skozi vsa števila od 0 do 30 in zanje izvedla sledeč postopek.\\
+Najprej nam bo generator, ki še ni dokončan vrnil vse grafe, ki bodo velikosti, kolikor bo v tistem trenutku vrednost for zanke.\\
+ Nato bodo ti grafi šli skozi dodatna testiranja, da bomo preverili, ali zadoščajo pogojem, določenim s definicijo problema. Najprej bo preverjeno, če je graf povezan. Sledilo bo preverjanje enostavnosti grafa. Na ta način bova število grafov, ki jih bova morala testirati, precej zmanjšala. \\
+ Nato bova za grafe, ki bodo preostali, določila neodvistnostno število $\alpha$ ter lokalno neodvistnostno število $\lambda_{avg}$. Ko bo to določeno, bova izbrala le tiste grafe, ki bodo zadoščali naši neenakosti. \\
+ Za grafe, ki bodo prestali vse izbore bo potem sledil še zadnji test; testirala bova, ali obstaja hamiltonska pot. Če nama uspe najti protiprimer, bova te protiprimere shranila posebej.
 \section{Prihodnje delo}
+Najino nadaljne delo bo predvsem delo na velikih grafih. Zato se bova morala poglobiti tudi v metahevristiko, ki pa se ji do sedaj nisva še veliko posvečala.
 \end{document}
