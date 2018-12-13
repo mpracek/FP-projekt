@@ -1,14 +1,12 @@
 % 115 120
 \documentclass[12pt,a4paper]{amsart}
-% ukazi za delo s slovenscino -- izberi kodiranje, ki ti ustreza
 \usepackage[slovene]{babel}
-%\usepackage[cp1250]{inputenc}
-%\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{url}
-%\usepackage[normalem]{ulem}
 \usepackage[dvipsnames,usenames]{color}
+\usepackage{graphicx} 
+
 
 \begin{document}
 \title{Grafitti Conjecturre 194}
@@ -23,9 +21,12 @@ kjer je $G$ naš graf, $\alpha(G)$ je neodvistnostno število, $\lambda_{avg}$ p
 \textbf{Neodvistnostno število grafa} $\alpha(G)$ nam pove moč največje množice, ki vsebuje  vozlišča grafa $G$, od katerih nobeni dve niste sosednji.\\
 \textbf{Lokalna neodvistnost grafa} $\lambda(G, v)$ nam pove neodvistnostno število podgrafa $Gv$ grafa $G$, kjer je $Gv$ definiran na sosedih vozlišča $v$. $\lambda_{avg}(G)$ nam pove povprečno lokalno neodvistnost.\\
 Ves čas zahtevamo, da je graf \textbf{preprost in povezan}. Ta zahteva pomeni, da ne obstaja vozlišče, ki ne bi bilo sosednje vsaj enemu drugemu vozlišču, poleg tega pa med dvema povezavama obstaja kvečjemu ena povezava in ne obstaja  povezave od vozlišča $v$ do vozlišča $v$, kar pomeni da ne obstajajo zanke na enem vozlišču.\\
+\includegraphics{simple}
+\source{http://mathworld.wolfram.com/images/eps-gif/SimpleGraph_950.gif}
 Graf ima \textbf{hamiltonsko pot}, če obstajata dve vozlišči, ki ju povezuje pot, ki natančno enkrat obišče vsako vozlišče grafa.\\
 \ \\
 Najina naloga je torej na dovolj velikem vzorcu grafov pokazati da to velja, ali pa dobiti protiprimer, ki bo dokazal da to ne drži.\\
 \section{Dosedanje delo}
+Do sedaj sva začela s pisanjem kode, ki bo preverjala majhne grafe, torej do približno $30$ vozlišč. Za tako ločnico sva se odločila zaradi nekaj $NP-težkih$ problemov, ki jih morava v najini seminarski nalogi 
 \section{Prihodnje delo}
 \end{document}
