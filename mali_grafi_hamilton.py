@@ -11,20 +11,22 @@ def neenakost(G):
     else:
         return False
 
-def hamiltonska_pot(G,zacetno_vozlisce):
+def hamiltonska_pot(G,zacetno_vozlisce zaporedje):
     """"
     G je prej generiran graf, za katerega smo potrdili neenakost.
     Zacetno vozlisce je vozlisce, ki smo ga dolocili, da zacne nase zaporedje;
     sicer ni pomembno za pot, ki mora obiskati vsa vozlisca, a potrebujemo zacetek.
-
-    Ce graf neenakosti ne zadosca, nam funkcija vrne Ta graf nas ne zanima,
-    drugace se izvede program.
+    Za prvi korak je potrebno, da je zaporedje enako praznemu seznamu [].
     """
     zaporedje = [zacetno_vozlisce]
-    #izbrisi_element_iz_vseh_gesel(G, zacetno_vozlisce)
     seznam = G[zacetno_vozlisce]
-    for sosed in seznam:
-        zaporedje.append(sosed)
-        izbrisi_element_iz_vseh_gesel(G, sosed)
+    for sosed in key(zacetna):
+        zaporedje = zaporedje
+        if len(zaporedje) = len(G):
+            return "Obstaja"
+        else:
+            zaporedje.append(sosed)
+            Hamilton(sosed, G, zaporedje)
+
 
 
