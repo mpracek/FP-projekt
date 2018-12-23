@@ -1,0 +1,2 @@
+V tej datoteki so navedeni vsi viri, s katerimi sva si pomagala pri izdelavi najinega projekta
+http://doc.sagemath.org/html/en/reference/graphs/sage/graphs/graph_generators.html

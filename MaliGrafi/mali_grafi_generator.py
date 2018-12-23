@@ -12,6 +12,16 @@ def generator(stevilo_vozlisc):
     generator(2)
     >>[{1: 2, 2:1}, {1:None, 2:None}]
     """
+    vsi_grafi = []
+    graf = dict()
+    seznam_vozlisc = [None]
+    for stevilo in stevilo_vozlisc:
+        graf.update({stevilo: None})
+        seznam_vozlisc.append(stevilo)
+    obogaten_seznam = potencna_mnozica(seznam_vozlisc)
+
+
+
 
 
 
