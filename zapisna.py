@@ -13,19 +13,14 @@ def nasi_grafi(stevilo_vozlisc):
 
 def neodvistnostno_stevilo(G):
     """
-Vrne neodvistno število grafa G
+    Vrne neodvistno število grafa G
+    Za pomoč uporabimo independet_set() iz modula neusmerjenih grafov.
     """
-    if len(G.vertices()) == 1:
-     	return 1
-    p = MixedIntegerLinearProgram(maximization = True)
-    b = p.new_variable(binary = True)
-    p.set_objective( sum([b[v] for v in G]) )
-    for u,v in g.edges(labels = False):
-    	p.add_constraint( b[u] + b[v] <= 1 )
-    p.solve()
-    b = p.get_values(b)
-    print [v for v,i in b.items() if i]
-
+    neodvisno = G.independent_set()
+    dolzina = len(neodvisno)
+    return dolzina
+    
+    
 def naredi_podgraf(G, seznam):
     """
     Funkcija, ki nam za dan seznam vozlišč vrne podgraf, definiran na le teh
@@ -33,14 +28,14 @@ def naredi_podgraf(G, seznam):
     """
     nov_graf = dict()
     for vozlisce in G:
-	if vozlisce not in seznam:
-	    G.pop(vozlisce)
-	else:
-	    for sosed in G[vozlisce]:
-		    sosedi = G[vozlisce]
-		    if sosed not in seznam:
-		    	sosedi.remove(sosed)
-	    nov_graf[sosed] = sosedi
+        if vozlisce not in seznam:
+            G.pop(vozlisce)
+        else:
+            for sosed in G[vozlisce]:
+                sosedi = G[vozlisce]
+                if sosed not in seznam:
+                    sosedi.remove(sosed)
+            nov_graf[sosed] = sosedi
     return nov_graf
 				
 	
@@ -61,18 +56,29 @@ def povprecna(G):
     """
     povprecje =  0
     for vozlisce in G:
-	povprecje += lokalna_neodvisnost(G, vozlisce)
+        povprecje += lokalna_neodvisnost(G, vozlisce)
     povprecna_vrednost  = povprecje/ len(G) 
     return povprecna_vrednost
 
+def preverjanje_za_en_graf(G):
+    """
+    Preveri, ali za en graf velja, če je ta graf izjema.
+    """
+    if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
+            if hamiltonian.path(G) == None:
+                graf = str(G)
+                return "Ovrgli smo domnevo in izjema je" + graf
+    else:
+        return "Izjeme nismo ovrgli"
+
 def preverjanje(stevilo_vozlisc):
     for G in nasi_grafi(stevilo_vozlisc):
-	if neodvisnostno_stevilo(G) =< 1 + povprecna(G):
-	    if hamiltonian.path(G) == None:
-		graf = str(G)
-		return "Ovrgli smo domnevo in izjema je" + graf
-	else:
-		return "Izjeme nismo ovrgli"
+       if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
+            if hamiltonian.path(G) == None:
+                graf = str(G)
+                return "Ovrgli smo domnevo in izjema je" + graf
+    else:
+        return "Izjeme nismo ovrgli"
 
 ##Genetski algoritem 
 import random
@@ -96,5 +102,57 @@ def zacetna_populacija():
     Ta funkcija nam da grafe, na katerih bo opravljen prvi test.
     """	
     stevilo_vozlisc = poisson(t = 1, lambd = 1/2)
-    return preverjanje(stevilo_vozlisc)
+    return nasi_grafi(stevilo_vozlisc)
+    
+#V tem koraku moramo določiti primerno začetno množico grafov
+# Določiti moramo primeren kriterij,
+#po katerem bomo grafe iz naše začetne množice razporedili
+
+#Odločimo se za čim manjša razlika med neodvisnostnim številom in povprečno lokalno neodvisnostjo
+def kriterij():
+    """"
+    Izračuna kriterij, po katerem vse elemente razporedimo.
+    """
+    populacija = zacetna_populacija()
+    slovar = dict()
+    for element in populacija:
+        racun = neodvisnostno_stevilo(element)- povprecna(element)
+        slovar[element] = racun
+    return slovar
+
+def razporedi():
+    populacija = kriterij()
+    ###POVPRAŠAJ ZA ITEMGETTER
+    razporejena_populacija = sorted(slovar.items(), key = operator.itemgetter(1))
+    nasa_populacija = []
+    for osebek in razporejena_populacija:
+        nasa_populacija.append(populacija[osebek[0]])
+    return nasa_populacija
+    
+def zacetna_testna_populacija():
+    """
+    Za začetni parameter izberemo zacetna_populacija(), ki nam bo vrnila
+    vse grafe začetne velikosti.
+    Najprej moramo določiti, kolikšen del začetne populacije bomo testirali
+    V genetiki velja, da ostanejo zgolj najbojši, zato bomo vzeli le najboljše,
+    torej tiste, pri katerih bo kriterij največji.
+    """
+    populacija = zacetna_populacija()
+    delez = random.uniform(0,1)
+    odstotek = math.floor( 100 * delez)/100
+    dolzina = len(zacetna_populacija())
+
+    vrednost = math.floor(odsotek * dolzina)
+    testna_populacija = populacija[:vrednost]
+    return testna_populacija
+
+def zacetni_test()
+    """
+    Funkcija izvede test za našo začetno testno populacijo.
+    """
+    zanima_nas = zacetna_testna_populacija()
+    for graf in zanima_nas:
+        preverjanje_za_en_graf(graf)
+
+        
     
