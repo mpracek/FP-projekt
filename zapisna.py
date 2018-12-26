@@ -72,6 +72,9 @@ def preverjanje_za_en_graf(G):
         return "Izjeme nismo ovrgli"
 
 def preverjanje(stevilo_vozlisc):
+    """
+    Preveri veljavnost konjekture za vse grafe na določenem številu vozlišč.
+    """
     for G in nasi_grafi(stevilo_vozlisc):
        if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
             if hamiltonian.path(G) == None:
@@ -84,6 +87,7 @@ def preverjanje(stevilo_vozlisc):
 import random
 import operator
 import math
+
 ##Initalization -> izbira števila začetnega vzorca
 def poisson(t = 1, lambd = 1/2):
     """
@@ -121,6 +125,9 @@ def kriterij():
     return slovar
 
 def razporedi():
+    """
+    Razporedi elemente začetne populacije.
+    """
     populacija = kriterij()
     ###POVPRAŠAJ ZA ITEMGETTER
     razporejena_populacija = sorted(slovar.items(), key = operator.itemgetter(1))
@@ -155,4 +162,15 @@ def zacetni_test()
         preverjanje_za_en_graf(graf)
 
         
+#Ko smo opravili začetni test sledi priprava nove generacije,
+#kjer nove testne primerke pripravimo skozi rekombinacijo in mutacijo.
+
+def mutacija_povezava():
+    """
+    Spremeni graf tako, da mu doda povezavo
+    """
+    zacetna = zacetna_testna_populacija()
+    vozlisca = list(zacetna.keys())
+    vozlisce1 = random.choice(vozlisca)
+    nabor = 
     
