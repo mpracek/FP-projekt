@@ -4,6 +4,10 @@
 #neodvistnostno število(G) =< 1 + povprečna lokalna neodvistnost(G)
 #in nima Hamiltonove poti.
 
+import random
+import operator
+import math
+
 def nasi_grafi(stevilo_vozlisc):
     """
     Funkcija, ki nam vrne enostavne povezane grafe na dolocenem stevilu vozlisc.
@@ -84,9 +88,6 @@ def preverjanje(stevilo_vozlisc):
         return "Izjeme nismo ovrgli"
 
 ##Genetski algoritem 
-import random
-import operator
-import math
 
 ##Initalization -> izbira števila začetnega vzorca
 def poisson(t = 1, lambd = 1/2):
@@ -112,15 +113,16 @@ def zacetna_populacija():
 # Določiti moramo primeren kriterij,
 #po katerem bomo grafe iz naše začetne množice razporedili
 
-#Odločimo se za čim manjša razlika med neodvisnostnim številom in povprečno lokalno neodvisnostjo
+#Odločimo se za �im manj�e neodvisnostno �tevilo
+
 def kriterij():
     """"
-    Izračuna kriterij, po katerem vse elemente razporedimo.
+    Izra�una kriterij, po katerem vse elemente razporedimo.
     """
     populacija = zacetna_populacija()
     slovar = dict()
     for element in populacija:
-        racun = neodvisnostno_stevilo(element)- povprecna(element)
+        racun = neodvisnostno_stevilo(element)
         slovar[element] = racun
     return slovar
 
@@ -129,7 +131,6 @@ def razporedi():
     Razporedi elemente začetne populacije.
     """
     populacija = kriterij()
-    ###POVPRAŠAJ ZA ITEMGETTER
     razporejena_populacija = sorted(slovar.items(), key = operator.itemgetter(1))
     nasa_populacija = []
     for osebek in razporejena_populacija:
@@ -175,10 +176,12 @@ def mutacija_povezava():
     		vozlisca = list(graf.keys())
     		vozlisce1 = random.choice(vozlisca)
     		#v nabor spadajo vsa vozli��a, ki niso niti vozlisce1, niti njegovi sosedi.
-
-
-### uredi ta nabor!!!!!!
-		nabor = 
+		seznam_vseh_vozlisc = list(graf.keys())
+		seznam_sosedov =  graf[vozlisce1]
+		for element in seznam_vseh_vozlisc:
+			if element in seznam_sosedov:
+				seznam_sosedov.remove(element)
+		nabor = seznam_sosedov
     		nabor = list(nabor)
 		vozlisce2 = random.choice(nabor)
 		graf.add_edge(vozlisce1, vozlisce2)
@@ -202,5 +205,28 @@ Doda vozlisce in mu nato doda nekaj povezav nanj.
 		naslednja_vozlisce.append(graf)
 	return naslednje_vozlisce	
 	
-def crossover()
-		
+
+def crossover(n, osebek1, osebek2):
+"""
+Preme�a znane grafe iz prej�nje generacije.
+Pomembna odlo�itev je velikost naslednje generacije, za katero predvidevamo, da raste.
+"""
+
+    while True:
+        subgraf1 = osebek1.random_subgraph(0.5) 
+        subgraf2 = osebek2.random_subgraph(0.5)
+        if len(subgraf1.vertices()) + len(subgraf2.vertices()) == n and len(subgraf1.vertices()) >= 1 and len(subgraf1.vertices()) < n and subgraf1.is_connected() and subgraf2.is_connected():
+            subgraf1.relabel()
+            subgraf2.relabel()
+            potomec = subgraf1.disjoint_union(subgraf2)
+            nove_povezave = poisson(lambd = log(n/2))
+            for k in range(nove_povezave):
+                a = subgraf1.random_vertex()
+                b = subgraf2.random_vertex()
+                potomec.add_edge((0, a), (1, b))
+            potomec.relabel()
+            break
+    return potomec	
+ 	
+	
+	
