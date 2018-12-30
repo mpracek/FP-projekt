@@ -169,8 +169,38 @@ def mutacija_povezava():
     """
     Spremeni graf tako, da mu doda povezavo
     """
-    zacetna = zacetna_testna_populacija()
-    vozlisca = list(zacetna.keys())
-    vozlisce1 = random.choice(vozlisca)
-    nabor = 
-    
+     zacetna = zacetna_testna_populacija()
+	naslednja_povezave = []
+	for graf in zacetna:
+    		vozlisca = list(graf.keys())
+    		vozlisce1 = random.choice(vozlisca)
+    		#v nabor spadajo vsa vozlišèa, ki niso niti vozlisce1, niti njegovi sosedi.
+
+
+### uredi ta nabor!!!!!!
+		nabor = 
+    		nabor = list(nabor)
+		vozlisce2 = random.choice(nabor)
+		graf.add_edge(vozlisce1, vozlisce2)
+		naslednja_povezave.append(graf)
+	return naslednja_povezave
+
+def mutacija_vozlisce():
+"""
+Doda vozlisce in mu nato doda nekaj povezav nanj.
+"""	
+	zacetna = zacetna_testna_populacija()
+	naslednja_vozlisce = []
+	dolzina = len(zacetna)
+	for graf in zacetna:
+		graf.add_vertex(novo)
+		stevilo = randint(0,dolzina)
+		vozlisca = list(graf.keys())
+		dodaj_vozlisca = random.sample(vozlisca, stevilo)
+		for i in range(stevilo):
+			graf.add_edge(novo, dodaj_vozlisca[i])
+		naslednja_vozlisce.append(graf)
+	return naslednje_vozlisce	
+	
+def crossover()
+		
