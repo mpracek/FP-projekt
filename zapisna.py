@@ -319,21 +319,21 @@ def potomci(populacija = nova_populacija(populacija = zacetna_testna_populacija(
 	
 
 def KoncniTestGA(konec):
-	populacija = zacetna_testna_populacija()
+    populacija = zacetna_testna_populacija()
     i = 1
     while i <= konec:
         populacija = potomci(populacija)
         populacija = mutacija(populacija)
         populacija = testna_populacija(populacija)
-        populacija.sort()
-        for i in range(len(populacija))
-            print("Domneva je ovrzena")
-            show(sortPopulation(populacija)[0])
-            resitev = sortPopulation(populacija)[0]
-            resitev = resitev.to_dictionary()
-            return resitev
-        i += 1
-return "Domneva ni ovrzena."
+        for i in range(len(populacija)):
+		G = populacija[i]
+		if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
+			if hamiltonian.path(G) == None:
+				print G
+				return "Ovrgli smo domnevo"
+		
+		i += 1
+	return "Domneva ni ovrzena."
 	
 	
 	
