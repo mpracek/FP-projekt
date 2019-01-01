@@ -269,10 +269,7 @@ def mutacija(graf):
 		sprememba2 = doda_povezavo(sprememba)
 		sprememba3 = odstrani_povezavo(sprememba2)
 		odstrani_vozlisce(sprememba3)
-### P
-###
-###
-###Popravi opis
+
 def nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05):
 	"""
 	Vsak graf iz populacije z neko verjetnostjo spremenimo.
@@ -289,6 +286,7 @@ def nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)
 		else:
 			naslednja_generacija[i] = populacija[i]		
 	return naslednja_generacija
+
 
 
 	
