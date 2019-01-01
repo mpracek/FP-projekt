@@ -166,67 +166,49 @@ def zacetni_test()
 #Ko smo opravili zaèetni test sledi priprava nove generacije,
 #kjer nove testne primerke pripravimo skozi rekombinacijo in mutacijo.
 
-def mutacija_povezava():
+def doda_povezavo(graf):
     """
     Spremeni graf tako, da mu doda povezavo
     """
-     zacetna = zacetna_testna_populacija()
-	naslednja_povezave = []
-	for graf in zacetna:
-    		vozlisca = list(graf.keys())
-    		vozlisce1 = random.choice(vozlisca)
-    		#v nabor spadajo vsa vozlišèa, ki niso niti vozlisce1, niti njegovi sosedi.
-		seznam_vseh_vozlisc = list(graf.keys())
-		seznam_sosedov =  graf[vozlisce1]
-		for element in seznam_vseh_vozlisc:
-			if element in seznam_sosedov:
-				seznam_sosedov.remove(element)
-		nabor = seznam_sosedov
-    		nabor = list(nabor)
-		vozlisce2 = random.choice(nabor)
-		graf.add_edge(vozlisce1, vozlisce2)
-		naslednja_povezave.append(graf)
-	return naslednja_povezave
+     	vozlisca = list(graf.keys())
+    	vozlisce1 = random.choice(vozlisca)
+    	seznam_vseh_vozlisc = list(graf.keys())
+	seznam_sosedov =  graf[vozlisce1]
+	for element in seznam_vseh_vozlisc:
+		if element in seznam_sosedov:
+			seznam_sosedov.remove(element)
+	nabor = seznam_sosedov
+    	nabor = list(nabor)
+	vozlisce2 = random.choice(nabor)
+	graf.add_edge(vozlisce1, vozlisce2)
+	return graf	
 
-def mutacija_vozlisce():
+def odstrani_povezavo(graf):
+	"""
+	Odstrani nakljuèno povezavo iz grafa;
+	Pazimo, da mora graf, ki ga dobimo, biti povezan.
+	"""
+	vozlisca = list(graf.keys())
+    	vozlisce1 = random.choice(vozlisca)
+	seznam_sosedov =  graf[vozlisce1]
+	vozlisce2 = random.choice(seznam_sosedov)
+	graf.delete_edge(vozlisce1, vozlisce2)
+	return graf
+    		
+	
+def mutacija_vozlisce(graf):
 """
 Doda vozlisce in mu nato doda nekaj povezav nanj.
 """	
-	zacetna = zacetna_testna_populacija()
-	naslednja_vozlisce = []
-	for graf in zacetna:
-		dolzina = len(list(graf.keys()))
-		graf.add_vertex(novo)
-		stevilo = randint(0,dolzina)
-		vozlisca = list(graf.keys())
-		dodaj_vozlisca = random.sample(vozlisca, stevilo)
-		for i in range(stevilo):
-			graf.add_edge(novo, dodaj_vozlisca[i])
-		naslednja_vozlisce.append(graf)
-	return naslednje_vozlisce	
+	dolzina = len(list(graf.keys()))
+	graf.add_vertex(novo)
+	stevilo = randint(0,dolzina)
+	vozlisca = list(graf.keys())
+	dodaj_vozlisca = random.sample(vozlisca, stevilo)
+	for i in range(stevilo):
+		graf.add_edge(novo, dodaj_vozlisca[i])
+	return graf	
 	
 
-def crossover(n, osebek1, osebek2):
-"""
-Premeša znane grafe iz prejšnje generacije.
-Pomembna odloèitev je velikost naslednje generacije, za katero predvidevamo, da raste.
-"""
-
-    while True:
-        subgraf1 = osebek1.random_subgraph(0.5) 
-        subgraf2 = osebek2.random_subgraph(0.5)
-        if len(subgraf1.vertices()) + len(subgraf2.vertices()) == n and len(subgraf1.vertices()) >= 1 and len(subgraf1.vertices()) < n and subgraf1.is_connected() and subgraf2.is_connected():
-            subgraf1.relabel()
-            subgraf2.relabel()
-            potomec = subgraf1.disjoint_union(subgraf2)
-            nove_povezave = poisson(lambd = log(n/2))
-            for k in range(nove_povezave):
-                a = subgraf1.random_vertex()
-                b = subgraf2.random_vertex()
-                potomec.add_edge((0, a), (1, b))
-            potomec.relabel()
-            break
-    return potomec	
- 	
 	
 	
