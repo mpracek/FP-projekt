@@ -1,7 +1,7 @@
 #115 120
-#V tej datoteki bo zapisan celoten genetski algoritem, ki bo izvedel naÅ¡ program. Zapisan je v jeziku Sage.
-#Å½elimo dokazati, da obstaja graf G, za katerega ne velja, da zadoÅ¡Äa neenakosti 
-#neodvistnostno Å¡tevilo(G) =< 1 + povpreÄna lokalna neodvistnost(G)
+#V tej datoteki bo zapisan celoten genetski algoritem, ki bo izvedel naš program. Zapisan je v jeziku Sage.
+#elimo dokazati, da obstaja graf G, za katerega ne velja, da zadošèa neenakosti 
+#neodvistnostno število(G) =< 1 + povpreèna lokalna neodvistnost(G)
 #in nima Hamiltonove poti.
 
 import random
@@ -17,8 +17,8 @@ def nasi_grafi(stevilo_vozlisc):
 
 def neodvistnostno_stevilo(G):
     """
-    Vrne neodvistno Å¡tevilo grafa G
-    Za pomoÄ uporabimo independet_set() iz modula neusmerjenih grafov.
+    Vrne neodvistno število grafa G
+    Za pomoè uporabimo independet_set() iz modula neusmerjenih grafov.
     """
     neodvisno = G.independent_set()
     dolzina = len(neodvisno)
@@ -27,8 +27,8 @@ def neodvistnostno_stevilo(G):
     
 def naredi_podgraf(G, seznam):
     """
-    Funkcija, ki nam za dan seznam vozliÅ¡Ä vrne podgraf, definiran na le teh
-    Seznam je tukaj nabor vozliÅ¡Ä, ki nas zanimajo.
+    Funkcija, ki nam za dan seznam vozlišè vrne podgraf, definiran na le teh
+    Seznam je tukaj nabor vozlišè, ki nas zanimajo.
     """
     nov_graf = dict()
     for vozlisce in G:
@@ -46,8 +46,8 @@ def naredi_podgraf(G, seznam):
 def lokalna_neodvistnost(G, vozlisce):
     """
     Vrne lokalno neodvistnost grafa G v vozliscu v.
-    Lokalna neodvistnost je neodvistnost podgrafa, ki ga doloÄajo sosedi vozliÅ¡Äa v,
-    za nek v iz mnoÅ¾ice vozliÅ¡Ä.
+    Lokalna neodvistnost je neodvistnost podgrafa, ki ga doloèajo sosedi vozlišèa v,
+    za nek v iz mnoice vozlišè.
     """
     mnozica = G[vozlisce]
     novGraf = naredi_podgraf(G, mnozica)
@@ -56,7 +56,7 @@ def lokalna_neodvistnost(G, vozlisce):
 
 def povprecna(G):
     """
-    Vrne povpreÄno lokalno neodvisnost grafa G
+    Vrne povpreèno lokalno neodvisnost grafa G
     """
     povprecje =  0
     for vozlisce in G:
@@ -66,33 +66,33 @@ def povprecna(G):
 
 def preverjanje_za_en_graf(G):
     """
-    Preveri, ali za en graf velja, Äe je ta graf izjema.
+    Preveri, ali za en graf velja, èe je ta graf izjema.
     """
     if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
             if hamiltonian.path(G) == None:
                 graf = str(G)
-                return "Ovrgli smo domnevo in izjema je" + graf
+                return "Ovrgli smo domnevo in izjema je" + 	graf
     else:
         return "Izjeme nismo ovrgli"
 
 def preverjanje(stevilo_vozlisc):
     """
-    Preveri veljavnost konjekture za vse grafe na doloÄenem Å¡tevilu vozliÅ¡Ä.
+    Preveri veljavnost konjekture za vse grafe na doloèenem številu vozlišè.
     """
     for G in nasi_grafi(stevilo_vozlisc):
        if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
             if hamiltonian.path(G) == None:
                 graf = str(G)
-                return "Ovrgli smo domnevo in izjema je" + graf
+                return "Ovrgli smo domnevo in izjema je" + 	graf
     else:
         return "Izjeme nismo ovrgli"
 
 ##Genetski algoritem 
 
-##Initalization -> izbira Å¡tevila zaÄetnega vzorca
+##Initalization -> izbira števila zaèetnega vzorca
 def poisson(t = 1, lambd = 1/2):
     """
-    S to funkcijo doloÄimo zaÄetno Å¡tevilo vozliÅ¡Ä
+    S to funkcijo doloèimo zaèetno število vozlišè
     """
     stevilo_vozlisc = 0
     racunalo = 0
@@ -101,7 +101,7 @@ def poisson(t = 1, lambd = 1/2):
         racunalo += random.expovariate(lambd)
     return stevilo_vozlisc
 		
-#Zanimajo nas zgolj enostavni, povezani grafi, zato bomo definirali zaÄetno mnoÅ¾ico.
+#Zanimajo nas zgolj enostavni, povezani grafi, zato bomo definirali zaèetno mnoico.
 def zacetna_populacija():
     """
     Ta funkcija nam da grafe, na katerih bo opravljen prvi test.
@@ -109,11 +109,11 @@ def zacetna_populacija():
     stevilo_vozlisc = poisson(t = 1, lambd = 1/2)
     return nasi_grafi(stevilo_vozlisc)
     
-#V tem koraku moramo doloÄiti primerno zaÄetno mnoÅ¾ico grafov
-# DoloÄiti moramo primeren kriterij,
-#po katerem bomo grafe iz naÅ¡e zaÄetne mnoÅ¾ice razporedili
+#V tem koraku moramo doloèiti primerno zaèetno mnoico grafov
+# Doloèiti moramo primeren kriterij,
+#po katerem bomo grafe iz naše zaèetne mnoice razporedili
 
-#OdloÄimo se za èim manjše neodvisnostno število
+#Odloèimo se za èim manjše neodvisnostno število
 
 def kriterij():
     """"
@@ -128,7 +128,7 @@ def kriterij():
 
 def razporedi():
     """
-    Razporedi elemente zaÄetne populacije.
+    Razporedi elemente zaèetne populacije.
     """
     populacija = kriterij()
     razporejena_populacija = sorted(slovar.items(), key = operator.itemgetter(1))
@@ -139,11 +139,11 @@ def razporedi():
     
 def zacetna_testna_populacija():
     """
-    Za zaÄetni parameter izberemo zacetna_populacija(), ki nam bo vrnila
-    vse grafe zaÄetne velikosti.
-    Najprej moramo doloÄiti, kolikÅ¡en del zaÄetne populacije bomo testirali
-    V genetiki velja, da ostanejo zgolj najbojÅ¡i, zato bomo vzeli le najboljÅ¡e,
-    torej tiste, pri katerih bo kriterij najveÄji.
+    Za zaèetni parameter izberemo zacetna_populacija(), ki nam bo vrnila
+    vse grafe zaèetne velikosti.
+    Najprej moramo doloèiti, kolikšen del zaèetne populacije bomo testirali
+    V genetiki velja, da ostanejo zgolj najboljši, zato bomo vzeli le najboljše,
+    torej tiste, z minimalnim neodvistnostnim številom.
     """
     populacija = zacetna_populacija()
     delez = random.uniform(0,1)
@@ -156,14 +156,14 @@ def zacetna_testna_populacija():
 
 def zacetni_test()
     """
-    Funkcija izvede test za naÅ¡o zaÄetno testno populacijo.
+    Funkcija izvede test za našo zaèetno testno populacijo.
     """
     zanima_nas = zacetna_testna_populacija()
     for graf in zanima_nas:
         preverjanje_za_en_graf(graf)
 
         
-#Ko smo opravili zaÄetni test sledi priprava nove generacije,
+#Ko smo opravili zaèetni test sledi priprava nove generacije,
 #kjer nove testne primerke pripravimo skozi rekombinacijo in mutacijo.
 
 def mutacija_povezava():
@@ -194,8 +194,8 @@ Doda vozlisce in mu nato doda nekaj povezav nanj.
 """	
 	zacetna = zacetna_testna_populacija()
 	naslednja_vozlisce = []
-	dolzina = len(zacetna)
 	for graf in zacetna:
+		dolzina = len(list(graf.keys()))
 		graf.add_vertex(novo)
 		stevilo = randint(0,dolzina)
 		vozlisca = list(graf.keys())
