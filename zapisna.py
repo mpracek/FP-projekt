@@ -287,8 +287,36 @@ def nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)
 			naslednja_generacija[i] = populacija[i]		
 	return naslednja_generacija
 
+# osebka imata samo enega potomca
+# n = stevilo vozlisc
+def crossover(n):
+	populus = nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)
+	osebek1 = random.choice(populus)
+	osebek2 = random.choice(populus)
+	while True:
+        subgraf1 = osebek1.random_subgraph(0.5) #vsebuje neko vozlišèe iz osebek1 z verj. 0.5
+        subgraf2 = osebek2.random_subgraph(0.5)
+        if len(subgraf1.vertices()) + len(subgraf2.vertices()) == n and len(subgraf1.vertices()) >= 1 and len(subgraf1.vertices()) < n and subgraf1.is_connected() and subgraf2.is_connected():
+            subgraf1.relabel()
+            subgraf2.relabel()
+            potomec = subgraf1.disjoint_union(subgraf2)
+            # lambda se spreminja z stevilom vozlisc
+            nove_povezave = poisson(lambd = log(n/2))
+            for k in range(nove_povezave):
+                a = subgraf1.random_vertex()
+                b = subgraf2.random_vertex()
+                potomec.add_edge((0, a), (1, b))
+            potomec.relabel()
+            break
+	return potomec
 
-
+def potomci(populacija = nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)):
+	nova_populacija = populacija
+    	stevilo_parjenj = poisson(t = pop_size)
+    		for k in range(stevilo_parjenj):
+                starsa = random.sample(populacija, k = 2)
+        nova_populacija.append(crossover(n, starsa[0], starsa[1]))
+	return nova_populacija
 	
 	
 	
