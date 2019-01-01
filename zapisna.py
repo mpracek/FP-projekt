@@ -193,13 +193,14 @@ def odstrani_povezavo(graf):
 	seznam_sosedov =  graf[vozlisce1]
 	vozlisce2 = random.choice(seznam_sosedov)
 	graf.delete_edge(vozlisce1, vozlisce2)
-	return graf
-    		
+	if graf.is_connected():
+		return graf
+		
 	
 def mutacija_vozlisce(graf):
-"""
-Doda vozlisce in mu nato doda nekaj povezav nanj.
-"""	
+	"""
+	Doda vozlisce in mu nato doda nekaj povezav nanj.
+	"""	
 	dolzina = len(list(graf.keys()))
 	graf.add_vertex(novo)
 	stevilo = randint(0,dolzina)
@@ -208,7 +209,30 @@ Doda vozlisce in mu nato doda nekaj povezav nanj.
 	for i in range(stevilo):
 		graf.add_edge(novo, dodaj_vozlisca[i])
 	return graf	
-	
 
+def odstrani_vozlisce(graf):
+	vozlisca = list(graf.keys())
+	vozlisce1 = random.choice(vozlisca)
+	graf.delete_vertex(vozlisce1)
+	if graf.is_connected():
+		return graf
+	
+def mutacija(graf):
+	"""
+	Na grafu lahko odstranimo, dodamo povezavo, dodamo, 	odstranimo vozlišèe in vsako kombinacijo le teh.
+	"""
+	p = random.uniform(0,1)
+	if p <= 1/15:
+		odstrani_vozlisce(graf)
+	elif p > 1/15 and p <= 2/15:
+		mutacija_vozlisce(graf)
+	elif p > 2/15 and p <= 3/15:
+		odstrani_povezavo(graf)
+	elif p > 3/15 and p <= 4/15:
+		doda_povezavo(graf)
+	elif p > 4/15 and p <= 5/15:
+		odstrani_vozlisce(graf) and mutacija_vozlisce()
+			
+	
 	
 	
