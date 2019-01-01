@@ -115,11 +115,10 @@ def zacetna_populacija():
 
 #Odloèimo se za èim manjše neodvisnostno število
 
-def kriterij():
+def kriterij(populacija):
     """"
     Izraèuna kriterij, po katerem vse elemente razporedimo.
     """
-    populacija = zacetna_populacija()
     slovar = dict()
     for element in populacija:
         racun = neodvisnostno_stevilo(element)
@@ -128,7 +127,7 @@ def kriterij():
 
 def razporedi():
     """
-    Razporedi elemente zaèetne populacije.
+    Razporedi elemente populacije.
     """
     populacija = kriterij()
     razporejena_populacija = sorted(slovar.items(), key = operator.itemgetter(1))
@@ -137,7 +136,7 @@ def razporedi():
         nasa_populacija.append(populacija[osebek[0]])
     return nasa_populacija
     
-def zacetna_testna_populacija():
+def testna_populacija():
     """
     Za zaèetni parameter izberemo zacetna_populacija(), ki nam bo vrnila
     vse grafe zaèetne velikosti.
@@ -145,7 +144,7 @@ def zacetna_testna_populacija():
     V genetiki velja, da ostanejo zgolj najboljši, zato bomo vzeli le najboljše,
     torej tiste, z minimalnim neodvistnostnim številom.
     """
-    populacija = zacetna_populacija()
+    populacija = razporedi()
     delez = random.uniform(0,1)
     odstotek = math.floor( 100 * delez)/100
     dolzina = len(zacetna_populacija())
@@ -318,6 +317,23 @@ def potomci(populacija = nova_populacija(populacija = zacetna_testna_populacija(
         nova_populacija.append(crossover(n, starsa[0], starsa[1]))
 	return nova_populacija
 	
+
+def KoncniTestGA(konec):
+	populacija = zacetna_testna_populacija()
+    i = 1
+    while i <= konec:
+        populacija = potomci(populacija)
+        populacija = mutacija(populacija)
+        populacija = testna_populacija(populacija)
+        populacija.sort()
+        for i in range(len(populacija))
+            print("Domneva je ovrzena")
+            show(sortPopulation(populacija)[0])
+            resitev = sortPopulation(populacija)[0]
+            resitev = resitev.to_dictionary()
+            return resitev
+        i += 1
+return "Domneva ni ovrzena."
 	
 	
 	
