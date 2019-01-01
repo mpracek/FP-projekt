@@ -231,8 +231,52 @@ def mutacija(graf):
 	elif p > 3/15 and p <= 4/15:
 		doda_povezavo(graf)
 	elif p > 4/15 and p <= 5/15:
-		odstrani_vozlisce(graf) and mutacija_vozlisce()
-			
+		sprememba = odstrani_vozlisce(graf)
+		mutacija_vozlisce(sprememba)
+	elif p > 5/15 and p <= 6/15:
+		sprememba = odstrani_vozlisce(graf)
+		odstrani_povezavo(sprememba)
+	elif p > 6/15 and p <= 7/15:
+		sprememba = odstrani_vozlisce(graf)
+		doda_povezavo(sprememba)
+	elif p > 7/15 and p <= 8/15:
+		sprememba = mutacija_vozlisce(graf)
+		odstrani_povezavo(sprememba)
+	elif p > 8/15 and p <= 9/15:
+		sprememba = mutacija_vozlisce(graf)
+		doda_povezavo(sprememba)
+	elif p > 9/15 and p <= 10/15:
+		sprememba = odstrani_povezavo(graf)
+		doda_povezavo(sprememba)
+	elif p > 10/15 and p <= 11/15:
+		sprememba = mutacija_vozlisce(graf)
+		sprememba2 = doda_povezavo(sprememba)
+		odstrani_povezavo(sprememba2)
+	elif p > 11/15 and p <= 12/15:
+		sprememba = mutacija_vozlisce(graf)
+		sprememba2 = doda_povezavo(sprememba)
+		odstrani_povezavo(sprememba2)
+	elif p > 12/15 and p <= 13/15:
+		sprememba = mutacija_vozlisce(graf)
+		sprememba2 = odstrani_vozlisce(sprememba)
+		odstrani_povezavo(sprememba2)
+	elif p > 13/15 and p <= 14/15:
+		sprememba = mutacija_vozlisce(graf)
+		sprememba2 = doda_povezavo(sprememba)
+		odstrani_vozlisce(sprememba2)
+	elif p > 14/15 and p <= 15/15:
+		sprememba = mutacija_vozlisce(graf)
+		sprememba2 = doda_povezavo(sprememba)
+		sprememba3 = odstrani_povezavo(sprememba2)
+		odstrani_vozlisce(sprememba3)
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
