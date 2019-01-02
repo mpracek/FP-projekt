@@ -1,4 +1,4 @@
-︠c7d563ac-4880-4edb-8be4-9e1fa784b848s︠
+︠c7d563ac-4880-4edb-8be4-9e1fa784b848︠
 #115 120
 #V tej datoteki bo zapisan celoten genetski algoritem, ki bo izvedel naš program. Zapisan je v jeziku Sage.
 #Želimo dokazati, da obstaja graf G, za katerega ne velja, da zadošča neenakosti
@@ -287,13 +287,10 @@ def nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)
 
 # osebka imata samo enega potomca
 # n = stevilo vozlisc
-def crossover(n):
+def crossover(n, osebek1, osebek2):
     """
     V nasem primeru je n stevilo vozlisc.
     """
-    populus = nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)
-    osebek1 = random.choice(populus)
-    osebek2 = random.choice(populus)
     while True:
         subgraf1 = osebek1.random_subgraph(0.5)
         subgraf2 = osebek2.random_subgraph(0.5)
@@ -313,7 +310,7 @@ def crossover(n):
 
 def potomci(populacija = nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)):
     nova_populacija = populacija
-    stevilo_parjenj = poisson(t = len(po))
+    stevilo_parjenj = poisson(t = len(populacija))
     for k in range(stevilo_parjenj):
         starsa = random.sample(populacija, k = 2)
         nova_populacija.append(crossover(n, starsa[0], starsa[1]))
