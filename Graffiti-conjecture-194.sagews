@@ -1,9 +1,8 @@
-︠c7d563ac-4880-4edb-8be4-9e1fa784b848︠
+︠8c42cd13-bb71-41e7-8eba-c2e2d21f9388s︠
 #115 120
-#V tej datoteki bo zapisan celoten genetski algoritem, ki bo izvedel naš program. Zapisan je v jeziku Sage.
-#Želimo dokazati, da obstaja graf G, za katerega ne velja, da zadošča neenakosti
-#neodvistnostno število(G) =< 1 + povprečna lokalna neodvistnost(G)
-#in nima Hamiltonove poti.
+#V tej datoteki bo zapisan celoten genetski algoritem, ki bo izvedel nas program. Zapisan je v jeziku Sage.
+#Zelimo dokazati, da obstaja graf G, za katerega ne velja, da zadosca neenakosti
+# neodvistnostno število(G) =< 1 + povprecna lokalna neodvistnost(G) in nima Hamiltonove poti.
 
 import random
 import operator
@@ -19,7 +18,7 @@ def nasi_grafi(stevilo_vozlisc):
 def neodvistnostno_stevilo(G):
     """
     Vrne neodvistno število grafa G
-    Za pomoč uporabimo independet_set() iz modula neusmerjenih grafov.
+    Za pomoc uporabimo independet_set() iz modula neusmerjenih grafov.
     """
     neodvisno = G.independent_set()
     dolzina = len(neodvisno)
@@ -28,8 +27,8 @@ def neodvistnostno_stevilo(G):
 
 def naredi_podgraf(G, seznam):
     """
-    Funkcija, ki nam za dan seznam vozlišč vrne podgraf, definiran na le teh
-    Seznam je tukaj nabor vozlišč, ki nas zanimajo.
+    Funkcija, ki nam za dan seznam vozlisc vrne podgraf, definiran na le teh
+    Seznam je tukaj nabor vozlisc, ki nas zanimajo.
     """
     nov_graf = dict()
     for vozlisce in G:
@@ -111,26 +110,16 @@ def zacetna_populacija():
     return nasi_grafi(stevilo_vozlisc)
 
 #V tem koraku moramo dolocti primerno začetno mnozico grafov
-# Dolociti moramo primeren kriterij,
-#po katerem bomo grafe iz naše začetne množice razporedili
-
+# Dolociti moramo primeren kriterij,po katerem bomo grafe iz nase zacetne mnozice razporedili
 #Odlocimo se za cim manjse neodvisnostno stevilo
 
-def kriterij(populacija):
-    """"
-    Izracuna kriterij, po katerem vse elemente razporedimo.
+def razporedi(populacija = zacetna_populacija()):
+    """
+    Izracuna kriterij, po katerem vse elemente razporedimo in razporedi elemente populacije.
     """
     slovar = dict()
     for element in populacija:
-        racun = neodvisnostno_stevilo(element)
-        slovar[element] = racun
-    return slovar
-
-def razporedi():
-    """
-    Razporedi elemente populacije.
-    """
-    populacija = kriterij()
+        slovar[element] = neodvistnostno_stevilo(element)
     razporejena_populacija = sorted(slovar.items(), key = operator.itemgetter(1))
     nasa_populacija = []
     for osebek in razporejena_populacija:
@@ -183,9 +172,9 @@ def doda_povezavo(graf):
 
 def odstrani_povezavo(graf):
     """
-	Odstrani naključno povezavo iz grafa;
-	Pazimo, da mora graf, ki ga dobimo, biti povezan.
-	"""
+    Odstrani nakljucno povezavo iz grafa;
+    Pazimo, da mora graf, ki ga dobimo, biti povezan.
+    """
     vozlisca = list(graf.keys())
     vozlisce1 = random.choice(vozlisca)
     seznam_sosedov =  graf[vozlisce1]
@@ -196,17 +185,17 @@ def odstrani_povezavo(graf):
 
 
 def mutacija_vozlisce(graf):
-	"""
-	Doda vozlisce in mu nato doda nekaj povezav nanj.
-	"""
-    dolzina = len(list(graf.keys()))
+    """
+    Doda vozlisce in mu nato doda nekaj povezav nanj.
+    """
+    dolzina = len(graf.keys())
     graf.add_vertex(novo)
     stevilo = randint(0,dolzina)
     vozlisca = list(graf.keys())
     dodaj_vozlisca = random.sample(vozlisca, stevilo)
     for i in range(stevilo):
         graf.add_edge(novo, dodaj_vozlisca[i])
-        return graf
+    return graf
 
 def odstrani_vozlisce(graf):
     vozlisca = list(graf.keys())
@@ -216,9 +205,9 @@ def odstrani_vozlisce(graf):
         return graf
 
 def mutacija(graf):
-	"""
-	Na grafu lahko odstranimo, dodamo povezavo, dodamo, odstranimo vozlisce in vsako kombinacijo le teh.
-	"""
+    """
+    Na grafu lahko odstranimo, dodamo povezavo, dodamo, odstranimo vozlisce in vsako kombinacijo le teh.
+    """
     p = random.uniform(0,1)
     if p <= 1/15:
         odstrani_vozlisce(graf)
@@ -268,12 +257,12 @@ def mutacija(graf):
         sprememba3 = odstrani_povezavo(sprememba2)
         odstrani_vozlisce(sprememba3)
 
-def nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05):
-	"""
-	Vsak graf iz populacije z neko verjetnostjo spremenimo.
-	Za zacetku za populacijo uporabimo zacetna_testna_populacija()
-	Ti spremenjeni grafi nam dajo novo populacijo.
-	"""
+def nova_populacija(populacija = testna_populacija(), verjetnost = 0.05):
+    """
+    Vsak graf iz populacije z neko verjetnostjo spremenimo.
+    Za zacetku za populacijo uporabimo zacetna_testna_populacija()
+    Ti spremenjeni grafi nam dajo novo populacijo.
+    """
     naslednja_generacija = []
     for i in range(len(populacija)):
         q = random.uniform(0,1)
@@ -306,7 +295,7 @@ def crossover(n, osebek1, osebek2):
                 potomec.add_edge((0, a), (1, b))
             potomec.relabel()
             break
-	return potomec
+    return potomec
 
 def potomci(populacija = nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)):
     nova_populacija = populacija
@@ -329,18 +318,14 @@ def KoncniTestGA(konec):
         populacija = testna_populacija(populacija)
         for i in range(len(populacija)):
             G = populacija[i]
-            if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
+            if neodvistnostno_stevilo(G) <= 1 + povprecna(G):
                 if hamiltonian.path(G) == None:
-                    print G
+                    print (G)
                     return "Ovrgli smo domnevo"
 
                 i += 1
     return "Domneva ni ovrzena."
-︡c96529f4-75b3-4283-964d-af8ffd4600f0︡
-︠03352f04-6ae2-4780-9fbd-175e0a3a34b1︠
-nasi_grafi(6)
-︡61cef9d9-fda8-49ae-a8ef-5b7476e576d7︡
-︠b2bbba09-f4ee-4796-8bdf-65c066c1fdad︠
+︡e8e4a29a-9504-4aa9-b5e0-5b8293ef1d58︡{"stderr":"\n\n*** WARNING: Code contains non-ascii characters    ***\n\n\nError in lines 179-190\nTraceback (most recent call last):\n  File \"/cocalc/lib/python2.7/site-packages/smc_sagews/sage_server.py\", line 1188, in execute\n    flags=compile_flags) in namespace, locals\n  File \"\", line 1, in <module>\n  File \"\", line 9, in testna_populacija\n  File \"\", line 7, in razporedi\n  File \"sage/misc/cachefunc.pyx\", line 2316, in sage.misc.cachefunc.CachedMethodCallerNoArgs.__call__ (build/cythonized/sage/misc/cachefunc.c:13467)\n    self.cache = f(self._instance)\n  File \"/ext/sage/sage-8.4_1804/local/lib/python2.7/site-packages/sage/graphs/generic_graph.py\", line 705, in __hash__\n    raise TypeError(\"This graph is mutable, and thus not hashable. \"\nTypeError: This graph is mutable, and thus not hashable. Create an immutable copy by `g.copy(immutable=True)`\n"}︡{"done":true}︡
 
 
 
