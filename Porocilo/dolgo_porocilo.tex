@@ -1,0 +1,233 @@
+% 115 120
+\documentclass[12pt,a4paper]{amsart}
+% ukazi za delo s slovenscino -- izberi kodiranje, ki ti ustreza
+\usepackage[slovene]{babel}
+%\usepackage[cp1250]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{url}
+%\usepackage[normalem]{ulem}
+\usepackage[dvipsnames,usenames]{color}
+\usepackage{graphicx}
+
+% ne spreminjaj podatkov, ki vplivajo na obliko strani
+\textwidth 15cm
+\textheight 24cm
+\oddsidemargin.5cm
+\evensidemargin.5cm
+\topmargin-5mm
+\addtolength{\footskip}{10pt}
+\pagestyle{plain}
+\overfullrule=15pt % oznaci predlogo vrstico
+
+
+% ukazi za matematicna okolja
+\theoremstyle{definition} % tekst napisan pokoncno
+\newtheorem{definicija}{Definicija}[section]
+\newtheorem{primer}[definicija]{Primer}
+\newtheorem{opomba}[definicija]{Opomba}
+
+\renewcommand\endprimer{\hfill$\diamondsuit$}
+
+
+\theoremstyle{plain} % tekst napisan posevno
+\newtheorem{lema}[definicija]{Lema}
+\newtheorem{izrek}[definicija]{Izrek}
+\newtheorem{trditev}[definicija]{Trditev}
+\newtheorem{posledica}[definicija]{Posledica}
+
+
+% za stevilske mnozice uporabi naslednje simbole
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+
+
+% ukaz za slovarsko geslo
+\newlength{\odstavek}
+\setlength{\odstavek}{\parindent}
+\newcommand{\geslo}[2]{\noindent\textbf{#1}\hspace*{3mm}\hangindent=\parindent\hangafter=1 #2}
+
+
+% naslednje ukaze ustrezno popravi
+\newcommand{\program}{Finančna matematika} % ime studijskega programa: Matematika/Finan"cna matematika
+\newcommand{\imeavtorja}{Martin Praček in Mela Malej} % ime avtorja
+\newcommand{\imementorja}{Riste Škrekovski} % akademski naziv in ime mentorja
+\newcommand{\naslovdela}{Graffiti Conjecture 194}
+\newcommand{\letnica}{2019} %letnica diplome
+
+
+% vstavi svoje definicije ...
+
+
+
+
+\begin{document}
+	
+	% od tod do povzetka ne spreminjaj nicesar
+	\thispagestyle{empty}
+	\noindent{\large
+		UNIVERZA V LJUBLJANI\\[1mm]
+		FAKULTETA ZA MATEMATIKO IN FIZIKO\\[5mm]
+		\program\ -- 1.~stopnja}
+	\vfill
+	
+	\begin{center}{\large
+			\imeavtorja\\[2mm]
+			{\bf \naslovdela}\\[10mm]
+			Seminarska naloga\\[1cm]
+			Mentor: \imementorja}
+	\end{center}
+	\vfill
+	
+	\noindent{\large
+		Ljubljana, \letnica}
+	\pagebreak
+	
+	\thispagestyle{empty}
+	\tableofcontents
+	\pagebreak
+	
+	\thispagestyle{empty}
+	\begin{center}
+		{\bf \naslovdela}\\[3mm]
+		{\sc Povzetek}
+		\ \\
+		Za predmet Finančni praktikum v študijskem letu $2018/19$ Martin Praček in Mela Malej dobila nalogo predstaviti problem Grafittijeve konjekuture $194$. \\
+		
+	\end{center}
+
+\pagebreak
+\section{Predstavitev problema}
+Grafittijeva konjektura 194 nam zastavi vprašanje iz teorije grafov.Zanima nas, ali za vsak preprost, povezan graf, ki zadošča pogoju $$ \alpha(G) \leq 1 + \lambda_{avg}(G)$$, velja, da obstaja hamiltonska pot. Gre za računalniško generirano trditev, pri kateri nas zanima, ali lahko najdemo protiprimer.\\
+\section{Pogoji našega problema}
+Naš pogoj je torej $$ \alpha(G) \leq 1 + \lambda_{avg}(G),$$
+kjer je $G$ naš graf, $\alpha(G)$ je neodvistnostno število, $\lambda_{avg}$ pa je povprečna lokalna neodvistnost grafa.\\
+\ \\
+\textbf{Neodvistnostno število grafa} $\alpha(G)$ nam pove moč največje množice, ki vsebuje  vozlišča grafa $G$, od katerih nobeni dve niste sosednji.\\
+\ \\
+\textbf{Lokalna neodvistnost grafa} $\lambda(G, v)$ nam pove neodvistnostno število podgrafa $Gv$ grafa $G$, kjer je $Gv$ definiran na sosedih vozlišča $v$. $\lambda_{avg}(G)$ nam pove povprečno lokalno neodvistnost.\\
+\begin{figure}[h]
+	\centering
+
+	\includegraphics[scale=1]{slike/graf1}
+\end{figure}
+
+Ves čas zahtevamo, da je graf \textbf{preprost in povezan}. Ta zahteva pomeni, da ne obstaja vozlišče, ki ne bi bilo sosednje vsaj enemu drugemu vozlišču, poleg tega pa med dvema povezavama obstaja kvečjemu ena povezava in ne obstaja  povezave od vozlišča $v$ do vozlišča $v$, kar pomeni da ne obstajajo zanke na enem vozlišču.\\
+ 
+Graf ima \textbf{hamiltonsko pot}, če obstajata dve vozlišči, ki ju povezuje pot, ki natančno enkrat obišče vsako vozlišče grafa.\\
+\ \\
+Najina naloga je torej na dovolj velikem vzorcu grafov pokazati da to velja, ali pa dobiti protiprimer, ki bo dokazal da to ne drži.\\
+\section{Delo}
+Z najinim delom sva pričela v programskem jeziku Python, vendar sva hitro ugotovila sizifovstvo najinega dela, in vse prestavila v programski jezik Sage, kjer sva v CoCalc spisala najino kodo. \\
+V začetku sva zaradi slabega razumevanja enega izmed virov sicer mislila, da bova lahko najino kodo uporabila tudi za sorazmerno velike grafe, velike tudi do 20 vozlišč, a sva nato ugotovila, da to ne bo šlo in potrebujeva genetski algoritem.
+\section{Koda in ideja programa}
+Glavna ideja najine kode sledi glavni ideji najine naloge. Po vrsti sva razvrstila vse koščke neenakosti, in nato pogledala, če za primerne grafe le ta tudi velja. Tako sva dobila vrsto pomožnih ter eno glavno funkcijo.
+\subsection{Pomožne funkcije}
+Kot že rečeno, sva v okvirju najinega dela uporabila vrsto pomožnih funkcij. 
+\subsubsection{neodvistnostno\_stevilo(G)}
+Ta funkcija nam vrne neodvistnostno število grafa G.
+\begin{verbatim}
+def neodvistnostno_stevilo(G):
+"""
+Vrne neodvistno število grafa G
+Za pomoc uporabimo independet_set() iz modula neusmerjenih grafov.
+"""
+neodvisno = G.independent_set()
+dolzina = len(neodvisno)
+return dolzina
+\end{verbatim}
+
+\subsubsection{naredi\_podgraf(G, seznam)}
+Naredi podgraf grafa G na vozliščih, ki so del seznama G.
+\begin{verbatim}
+def naredi_podgraf(G, seznam):
+"""
+Funkcija, ki nam za dan seznam vozlisc vrne podgraf, 
+definiran na le teh.
+Seznam je tukaj nabor vozlisc, ki nas zanimajo.
+"""
+nov_graf = dict()
+for vozlisce in G:
+    if vozlisce not in seznam:
+        G.pop(vozlisce)
+    else:
+        for sosed in G[vozlisce]:
+            sosedi = G[vozlisce]
+            if sosed not in seznam:
+                sosedi.remove(sosed)
+        nov_graf[sosed] = sosedi
+return nov_graf
+
+\end{verbatim}
+
+\subsubsection{lokalna\_neodvistnost(G, vozlisce)}
+Ta funkcija nam vrne lokalno neodvistnost grafa G.
+\begin{verbatim}
+def lokalna_neodvistnost(G, vozlisce):
+"""
+Vrne lokalno neodvistnost grafa G v vozliscu v.
+Lokalna neodvistnost je neodvistnost podgrafa, 
+ki ga določajo sosedi vozlišča v,
+za nek v iz množice vozlišč.
+"""
+mnozica = G[vozlisce]
+novGraf = naredi_podgraf(G, mnozica)
+lokalna_neodvistnost = neodvisnost(novGraf)
+return lokalna
+\end{verbatim}
+
+\subsubsection{povprecna(G)}
+Ta funkcija nam vrne povprečno lokalno neodvistnost.
+\begin{verbatim}
+def povprecna(G):
+"""
+Vrne povprečno lokalno neodvisnost grafa G
+"""
+povprecje =  0
+for vozlisce in G:
+    povprecje += lokalna_neodvisnost(G, vozlisce)
+povprecna_vrednost  = povprecje/ len(G)
+return povprecna_vrednost
+\end{verbatim}
+
+\subsection{Glavna koda}
+Za vsak slučaj sva si pripravila dve vrsti glavne kode, in sicer eno, ki je uporabna le na enem grafu in tisto, ki je uporabna za večje število grafov, namreč vse grafe enake velikosti.
+
+\begin{verbatim}
+def preverjanje_za_en_graf(G):
+"""
+Preveri, ali za en graf velja, če je ta graf izjema.
+"""
+if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
+   if hamiltonian.path(G) == None:
+       graf = str(G)
+       return "Ovrgli smo domnevo in izjema je" + 	graf
+   else:
+       return "Izjeme nismo ovrgli"
+
+def preverjanje(stevilo_vozlisc):
+"""
+Preveri veljavnost konjekture za vse grafe na določenem številu vozlišč.
+"""
+for G in nasi_grafi(stevilo_vozlisc):
+    if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
+       if hamiltonian.path(G) == None:
+          graf = str(G)
+          return "Ovrgli smo domnevo in izjema je" + 	graf
+       else:
+          return "Izjeme nismo ovrgli"
+\end{verbatim}
+
+Na ta način smo oblikovali funkcije, s katerimi smo testirali grafe, za katere časovna zahtevnost ni bila prevelika, torej grafe do $8$ vozlišč. Za večje grafe smo uporabili genetski algoritem.
+\subsection{Genetski algoritem}
+
+Genetski algoritem je vrsta algoritma, ki temelji na Darwinovi ideji o razvoju vrst in preživetju najmočnejših. Zelo pomembno pa je, kako določimo, kdo je tu najmočnejši, zato se moramo primerno odločiti za kriterij, po katerem bomo to delali. V našem primeru smo se odločili za čim manjše neodvisnostno število.\\
+
+V našem primeru sva se odločila, da bo populacija rasla iz $zacetne\_populacija(maksimalna)$, kjer določimo začetno množico povezanih grafov. Z vrednostjo maksimalna smo določili največjo velikost generacije.\\
+Nato sva te grafe razvrstila po določenem kriteriju in določila možnosti mutacije "populacije", torej vsakega izmed grafov. Grafu lahko dodamo ali odstranimo povezavo in dodamo ali odstranimo vozlišče, na koncu pa jih lahko še križamo.\\
+Ko sva to naredila, sva najin program testirala.
+\end{document}
