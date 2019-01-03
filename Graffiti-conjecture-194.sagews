@@ -1,3 +1,6 @@
+︠dc478ac5-b734-48af-b21e-2f5add0914ab︠
+
+︡40044475-9905-452d-bda6-0feb025b13a0︡
 ︠8c42cd13-bb71-41e7-8eba-c2e2d21f9388s︠
 #115 120
 #V tej datoteki bo zapisan celoten genetski algoritem, ki bo izvedel nas program. Zapisan je v jeziku Sage.
@@ -64,7 +67,7 @@ def povprecna(G):
     povprecna_vrednost  = povprecje/ len(G)
     return povprecna_vrednost
 
-def preverjanje_za_en_graf(G):
+def preverjanje_za_en_graf(G, maksimalna):
     """
     Preveri, ali za en graf velja, če je ta graf izjema.
     """
@@ -75,17 +78,16 @@ def preverjanje_za_en_graf(G):
     else:
         return "Izjeme nismo ovrgli"
 
-def preverjanje(stevilo_vozlisc):
+def preverjanje(stevilo_vozlisc, maksimalna):
     """
     Preveri veljavnost konjekture za vse grafe na določenem številu vozlišč.
     """
     for G in nasi_grafi(stevilo_vozlisc):
-       if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
+        if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
             if hamiltonian.path(G) == None:
                 graf = str(G)
                 return "Ovrgli smo domnevo in izjema je" + 	graf
-    else:
-        return "Izjeme nismo ovrgli"
+    return "Izjeme nismo ovrgli"
 
 ##Genetski algoritem
 
@@ -102,18 +104,26 @@ def poisson(t = 1, lambd = 1/2):
     return stevilo_vozlisc
 
 #Zanimajo nas zgolj enostavni, povezani grafi, zato bomo definirali zacetno mnozico.
-def zacetna_populacija():
+def zacetna_populacija(maksimalna):
     """
     Ta funkcija nam da grafe, na katerih bo opravljen prvi test.
+    Maksimalna nam pove, koliko je največja (maksimalna) velikost vsake generacije.
     """
-    stevilo_vozlisc = poisson(t = 1, lambd = 1/2)
-    return nasi_grafi(stevilo_vozlisc)
+    stevilo_vozlisc = poisson(t = 5, lambd = 1/2)
+    populacija = []
+    stevec = 0
+    while stevec < maksimalna:
+        graf = graphs.RandomGNP(stevilo_vozlisc, random.uniform(0, 1))
+        if graf.is_connected():
+            populacija.append(graf)
+            i += 1
+    return populacija
 
 #V tem koraku moramo dolocti primerno začetno mnozico grafov
 # Dolociti moramo primeren kriterij,po katerem bomo grafe iz nase zacetne mnozice razporedili
 #Odlocimo se za cim manjse neodvisnostno stevilo
 
-def razporedi(populacija = zacetna_populacija()):
+def razporedi(populacija = zacetna_populacija(maksimalna)):
     """
     Izracuna kriterij, po katerem vse elemente razporedimo in razporedi elemente populacije.
     """
@@ -126,7 +136,7 @@ def razporedi(populacija = zacetna_populacija()):
         nasa_populacija.append(populacija[osebek[0]])
     return nasa_populacija
 
-def testna_populacija():
+def testna_populacija(maksimalna):
     """
     Za zacetni parameter izberemo zacetna_populacija(), ki nam bo vrnila
     vse grafe zacetne velikosti.
@@ -135,21 +145,11 @@ def testna_populacija():
     torej tiste, z minimalnim neodvistnostnim številom.
     """
     populacija = razporedi()
-    delez = random.uniform(0,1)
-    odstotek = math.floor( 100 * delez)/100
-    dolzina = len(zacetna_populacija())
-
-    vrednost = math.floor(odsotek * dolzina)
-    testna_populacija = populacija[:vrednost]
+    if len(populacija) > maksimalna:
+        testna_populacija = populacija[:vrednost]
+    else:
+        testna_populacija = populacija
     return testna_populacija
-
-def zacetni_test():
-    """
-    Funkcija izvede test za naso začetno testno populacijo.
-    """
-    zanima_nas = zacetna_testna_populacija()
-    for graf in zanima_nas:
-        preverjanje_za_en_graf(graf)
 
 
 #Ko smo opravili zacetni test sledi priprava nove generacije,
@@ -159,29 +159,28 @@ def doda_povezavo(graf):
     """
     Spremeni graf tako, da mu doda povezavo
     """
-    vozlisca = list(graf.keys())
+    vozlisca = graf.keys()
     vozlisce1 = random.choice(vozlisca)
-    seznam_vseh_vozlisc = list(graf.keys())
-    seznam_sosedov =  graf[vozlisce1]
-    for element in seznam_vseh_vozlisc:
-        if element in seznam_sosedov:
-            seznam_sosedov.remove(element)
-    vozlisce2 = random.choice(seznam_sosedov)
-    graf.add_edge(vozlisce1, vozlisce2)
+    vozlisce2 = random.choice(vozlisca)
+    if vozlisce1 != vozlisce2:
+        graf.add_edge(vozlisce1, vozlisce2)
     return graf
+
 
 def odstrani_povezavo(graf):
     """
     Odstrani nakljucno povezavo iz grafa;
     Pazimo, da mora graf, ki ga dobimo, biti povezan.
     """
-    vozlisca = list(graf.keys())
-    vozlisce1 = random.choice(vozlisca)
-    seznam_sosedov =  graf[vozlisce1]
-    vozlisce2 = random.choice(seznam_sosedov)
-    graf.delete_edge(vozlisce1, vozlisce2)
-    if graf.is_connected():
-        return graf
+    kopija = Graph(graf, immutable=True)
+    vozlisce1 = kopija.random_vertex()
+    vozlisce2 = kopija.random_vertex()
+    if vozlisce1 != vozlisce2:
+        kopija.delete_edge(vozlisce1, vozlisce2)
+        if kopija.is_connected():
+            return kopija
+        else:
+            kopija.add_edge(vozlisce1, vozlisce2)
 
 
 def mutacija_vozlisce(graf):
@@ -257,7 +256,7 @@ def mutacija(graf):
         sprememba3 = odstrani_povezavo(sprememba2)
         odstrani_vozlisce(sprememba3)
 
-def nova_populacija(populacija = testna_populacija(), verjetnost = 0.05):
+def nova_populacija(populacija = testna_populacija(maksimalna), verjetnost = 0.05):
     """
     Vsak graf iz populacije z neko verjetnostjo spremenimo.
     Za zacetku za populacijo uporabimo zacetna_testna_populacija()
@@ -297,7 +296,7 @@ def crossover(n, osebek1, osebek2):
             break
     return potomec
 
-def potomci(populacija = nova_populacija(populacija = zacetna_testna_populacija(), verjetnost = 0.05)):
+def potomci(populacija = nova_populacija(populacija = testna_populacija(maksimalna), verjetnost = 0.05)):
     nova_populacija = populacija
     stevilo_parjenj = poisson(t = len(populacija))
     for k in range(stevilo_parjenj):
@@ -306,11 +305,11 @@ def potomci(populacija = nova_populacija(populacija = zacetna_testna_populacija(
     return nova_populacija
 
 
-def KoncniTestGA(konec):
+def KoncniTestGA(konec,maksimalna):
     """
     Konec pove, koliko generacij naj pogledamo.
     """
-    populacija = testna_populacija()
+    populacija = testna_populacija(maksimalna)
     i = 1
     while i <= konec:
         populacija = potomci(populacija)
@@ -325,8 +324,8 @@ def KoncniTestGA(konec):
 
                 i += 1
     return "Domneva ni ovrzena."
-︡e8e4a29a-9504-4aa9-b5e0-5b8293ef1d58︡{"stderr":"\n\n*** WARNING: Code contains non-ascii characters    ***\n\n\nError in lines 179-190\nTraceback (most recent call last):\n  File \"/cocalc/lib/python2.7/site-packages/smc_sagews/sage_server.py\", line 1188, in execute\n    flags=compile_flags) in namespace, locals\n  File \"\", line 1, in <module>\n  File \"\", line 9, in testna_populacija\n  File \"\", line 7, in razporedi\n  File \"sage/misc/cachefunc.pyx\", line 2316, in sage.misc.cachefunc.CachedMethodCallerNoArgs.__call__ (build/cythonized/sage/misc/cachefunc.c:13467)\n    self.cache = f(self._instance)\n  File \"/ext/sage/sage-8.4_1804/local/lib/python2.7/site-packages/sage/graphs/generic_graph.py\", line 705, in __hash__\n    raise TypeError(\"This graph is mutable, and thus not hashable. \"\nTypeError: This graph is mutable, and thus not hashable. Create an immutable copy by `g.copy(immutable=True)`\n"}︡{"done":true}︡
-
+︡5385e434-f8a6-4e31-b93b-40fa3427ec07︡{"stderr":"\n\n*** WARNING: Code contains non-ascii characters    ***\n\n\nError in lines 74-83\nTraceback (most recent call last):\n  File \"/cocalc/lib/python2.7/site-packages/smc_sagews/sage_server.py\", line 1188, in execute\n    flags=compile_flags) in namespace, locals\n  File \"\", line 1, in <module>\nNameError: name 'maksimalna' is not defined\n"}︡{"done":true}︡
+︠d5abe42a-f839-43bb-8503-c3dad2ed788f︠
 
 
 
