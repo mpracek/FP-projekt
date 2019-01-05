@@ -145,63 +145,34 @@ Glavna ideja najine kode sledi glavni ideji najine naloge. Po vrsti sva razvrsti
 Kot že rečeno, sva v okvirju najinega dela uporabila vrsto pomožnih funkcij. 
 \subsubsection{neodvistnostno\_stevilo(G)}
 Ta funkcija nam vrne neodvistnostno število grafa G. Tukaj smo si pomagali z funkcijo $.independent\_set()$, ki vrne največjo množico, kjer nobeni vozlišči nista sosednji.s 
-\begin{verbatim}
-def neodvistnostno_stevilo(G):
-"""
-Vrne neodvistno število grafa G
-Za pomoc uporabimo independet_set() iz modula neusmerjenih grafov.
-"""
-neodvisno = G.independent_set()
-dolzina = len(neodvisno)
-return dolzina
-\end{verbatim}
+\begin{figure}[h]
+	\includegraphics{slike/neodvisnost}
+\end{figure}
+\ \\
+
 
 \subsubsection{lokalna\_neodvistnost(G, vozlisce)}
 Ta funkcija nam vrne lokalno neodvistnost grafa G.
-\begin{verbatim}
-def lokalna_neodvistnost(G, vozlisce):
-"""
-Vrne lokalno neodvistnost grafa G v vozliscu v.
-Lokalna neodvistnost je neodvisnost podgrafa, 
-ki ga določajo sosedi vozlišča v,
-za nek v iz množice vozlišč.
-"""
-mnozica = G[vozlisce]
-novGraf = naredi_podgraf(G, mnozica)
-lokalna_neodvistnost = neodvisnost(novGraf)
-return lokalna
-\end{verbatim}
+\begin{figure}[h]
+	\includegraphics{slike/lokalna}
+\end{figure}
+\ \\
+
 
 \subsubsection{povprecna(G)}
 Ta funkcija nam vrne povprečno lokalno neodvisnost.
-\begin{verbatim}
-def povprecna(G):
-"""
-Vrne povprečno lokalno neodvisnost grafa G
-"""
-povprecje =  0
-for vozlisce in G:
-    povprecje += lokalna_neodvisnost(G, vozlisce)
-povprecna_vrednost  = povprecje/ len(G)
-return povprecna_vrednost
-\end{verbatim}
+\begin{figure}[h]
+	\includegraphics{slike/povprecna}
+\end{figure}
+\ \\
 
 \subsection{Glavna funkcija}
 Glavna funkcija, s katero smo izvajali teste, je tako dobila končen izgled.
-\begin{verbatim}
+\begin{figure}[h]
+	\includegraphics{slike/preveri}
+\end{figure}
+\ \\
 
-def preverjanje(stevilo_vozlisc):
-"""
-Preveri veljavnost konjekture za vse grafe na določenem številu vozlišč.
-"""
-for G in nasi_grafi(stevilo_vozlisc):
-    if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
-       if hamiltonian.path(G) == None:
-          graf = str(G)
-          return "Ovrgli smo domnevo in izjema je" + 	graf
-       else:
-          return "Izjeme nismo ovrgli"
-\end{verbatim}
 
 Na ta način smo oblikovali funkcije, s katerimi smo testirali grafe. Za večje število testov smo uporabili genetski algoritem.
 \subsection{Genetski algoritem}
@@ -215,5 +186,7 @@ Ko sva to naredila, sva najin genetski algoritem testirala.\\
 	\includegraphics{slike/cocalc2}
 \end{figure}
 \ \\
-Test sva naredila na $10000$ generacijah, ki so bile lahko velike največ $10000$. Ker nam ta test ni vrnil izjeme predvidevava, da izjeme ni možno najti.
+Test sva naredila na $10000$ generacijah, ki so bile lahko velike največ $10000$. Ker nam ta test ni vrnil izjeme predvidevava, da izjeme ni možno najti.\\
+\ \\
+Ker nas poleg uspešnosti kode navadno zanima tudi njena hitrost oziroma časovna zahtevnost, sva se tudi to odločila testirati. Odločila sva se za 
 \end{document}
