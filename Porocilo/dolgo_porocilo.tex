@@ -103,10 +103,13 @@
 
 \pagebreak
 \section{Predstavitev problema}
-Grafittijeva konjektura 194 nam zastavi vprašanje iz teorije grafov.Zanima nas, ali za vsak preprost, povezan graf, ki zadošča pogoju $$ \alpha(G) \leq 1 + \lambda_{avg}(G)$$, velja, da obstaja hamiltonska pot. Gre za računalniško generirano trditev, pri kateri nas zanima, ali lahko najdemo protiprimer.\\
+Grafittijeva konjektura 194 nam zastavi vprašanje iz teorije grafov.Zanima nas, ali za vsak preprost, povezan graf, ki zadošča pogoju $$ \alpha(G) \leq 1 + \lambda_{avg}(G),$$ velja, da obstaja hamiltonska pot. Gre za računalniško generirano trditev, pri kateri nas zanima, ali lahko najdemo protiprimer, kar je tudi najina glavna naloga.\\
 \section{Pogoji našega problema}
-Naš pogoj je torej $$ \alpha(G) \leq 1 + \lambda_{avg}(G),$$
-kjer je $G$ naš graf, $\alpha(G)$ je neodvistnostno število, $\lambda_{avg}$ pa je povprečna lokalna neodvistnost grafa.\\
+Naš pogoj je torej 
+\ \\
+$$ \alpha(G) \leq 1 + \lambda_{avg}(G),$$
+\ \\
+kjer je $G$ naš graf, $\alpha(G)$ je neodvisnostno število, $\lambda_{avg}$ pa je povprečna lokalna neodvisnost grafa.\\
 \ \\
 \textbf{Neodvistnostno število grafa} $\alpha(G)$ nam pove moč največje množice, ki vsebuje  vozlišča grafa $G$, od katerih nobeni dve niste sosednji.\\
 \ \\
@@ -117,7 +120,7 @@ kjer je $G$ naš graf, $\alpha(G)$ je neodvistnostno število, $\lambda_{avg}$ p
 	\includegraphics[scale=1]{slike/graf1}
 \end{figure}
 
-Ves čas zahtevamo, da je graf \textbf{preprost in povezan}. Ta zahteva pomeni, da ne obstaja vozlišče, ki ne bi bilo sosednje vsaj enemu drugemu vozlišču, poleg tega pa med dvema povezavama obstaja kvečjemu ena povezava in ne obstaja  povezave od vozlišča $v$ do vozlišča $v$, kar pomeni da ne obstajajo zanke na enem vozlišču.\\
+Ves čas zahtevamo, da je graf \textbf{preprost in povezan}. Ta zahteva pomeni, da ne obstaja vozlišče, ki ne bi bilo sosednje vsaj enemu drugemu vozlišču,  med dvema povezavama obstaja kvečjemu ena povezava, poleg tega pa ne obstaja  povezava od vozlišča $v$ do vozlišča $v$, kar pomeni da ne obstajajo zanke na enem vozlišču.\\
  
 Graf ima \textbf{hamiltonsko pot}, če obstajata dve vozlišči, ki ju povezuje pot, ki natančno enkrat obišče vsako vozlišče grafa.\\
 \ \\
@@ -135,9 +138,7 @@ Očitno je neodvistnostno število $2$, povprečna lokalna neodvistnost pa je\\ 
 Naša neenakost torej pravi, da je $$2 \leq 1+ \frac{6}{4},$$ 
 \\kar drži. Naša naloga sedaj je dokazati, da hamiltonska pot ne obstaja. Vendar nam to v našem primeru ne bo uspelo, saj jo lahko precej enostavno najdemo.
 \section{Delo}
-Z najinim delom sva pričela v programskem jeziku Python, vendar sva hitro ugotovila sizifovstvo najinega dela, in vse prestavila v programski jezik Sage, kjer sva v CoCalc spisala najino kodo. \\
-V začetku sva zaradi slabega razumevanja enega izmed virov sicer mislila, da bova lahko najino kodo uporabila tudi za sorazmerno velike grafe, velike tudi do 20 vozlišč, a sva nato ugotovila, da to ne bo šlo in potrebujeva genetski algoritem.¸\\
-Zaradi velike časovni zahtevnosti nekaterih izmed klicanih funkcij, kamor spada $independent\_set()$ ter $hamiltonian\_path()$ sva doživela problem pri času izvajanja kode.
+Z najinim delom sva pričela v programskem jeziku Python, vendar sva hitro ugotovila sizifovstvo tega početja, in vse prestavila v programski jezik Sage, kjer sva v CoCalc spisala najino kodo v Jupyter Notebook. \\
 \section{Koda in ideja programa}
 Glavna ideja najine kode sledi glavni ideji najine naloge. Po vrsti sva razvrstila vse koščke neenakosti, in nato pogledala, če za primerne grafe le ta tudi velja. Tako sva dobila vrsto pomožnih ter eno glavno funkcijo.
 \subsection{Pomožne funkcije}
@@ -155,36 +156,13 @@ dolzina = len(neodvisno)
 return dolzina
 \end{verbatim}
 
-\subsubsection{naredi\_podgraf(G, seznam)}
-Naredi podgraf grafa G na vozliščih, ki so del seznama G.
-\begin{verbatim}
-def naredi_podgraf(G, seznam):
-"""
-Funkcija, ki nam za dan seznam vozlisc vrne podgraf, 
-definiran na le teh.
-Seznam je tukaj nabor vozlisc, ki nas zanimajo.
-"""
-nov_graf = dict()
-for vozlisce in G:
-    if vozlisce not in seznam:
-        G.pop(vozlisce)
-    else:
-        for sosed in G[vozlisce]:
-            sosedi = G[vozlisce]
-            if sosed not in seznam:
-                sosedi.remove(sosed)
-        nov_graf[sosed] = sosedi
-return nov_graf
-
-\end{verbatim}
-
 \subsubsection{lokalna\_neodvistnost(G, vozlisce)}
 Ta funkcija nam vrne lokalno neodvistnost grafa G.
 \begin{verbatim}
 def lokalna_neodvistnost(G, vozlisce):
 """
 Vrne lokalno neodvistnost grafa G v vozliscu v.
-Lokalna neodvistnost je neodvistnost podgrafa, 
+Lokalna neodvistnost je neodvisnost podgrafa, 
 ki ga določajo sosedi vozlišča v,
 za nek v iz množice vozlišč.
 """
@@ -195,7 +173,7 @@ return lokalna
 \end{verbatim}
 
 \subsubsection{povprecna(G)}
-Ta funkcija nam vrne povprečno lokalno neodvistnost.
+Ta funkcija nam vrne povprečno lokalno neodvisnost.
 \begin{verbatim}
 def povprecna(G):
 """
@@ -208,20 +186,9 @@ povprecna_vrednost  = povprecje/ len(G)
 return povprecna_vrednost
 \end{verbatim}
 
-\subsection{Glavna koda}
-Za vsak slučaj sva si pripravila dve vrsti glavne kode, in sicer eno, ki je uporabna le na enem grafu in tisto, ki je uporabna za večje število grafov, namreč vse grafe enake velikosti.
-
+\subsection{Glavna funkcija}
+Glavna funkcija, s katero smo izvajali teste, je tako dobila končen izgled.
 \begin{verbatim}
-def preverjanje_za_en_graf(G):
-"""
-Preveri, ali za en graf velja, če je ta graf izjema.
-"""
-if neodvisnostno_stevilo(G) <= 1 + povprecna(G):
-   if hamiltonian.path(G) == None:
-       graf = str(G)
-       return "Ovrgli smo domnevo in izjema je" + 	graf
-   else:
-       return "Izjeme nismo ovrgli"
 
 def preverjanje(stevilo_vozlisc):
 """
@@ -236,12 +203,14 @@ for G in nasi_grafi(stevilo_vozlisc):
           return "Izjeme nismo ovrgli"
 \end{verbatim}
 
-Na ta način smo oblikovali funkcije, s katerimi smo testirali grafe, za katere časovna zahtevnost ni bila prevelika, torej grafe do $8$ vozlišč. Za večje grafe smo uporabili genetski algoritem.
+Na ta način smo oblikovali funkcije, s katerimi smo testirali grafe. Za večje število testov smo uporabili genetski algoritem.
 \subsection{Genetski algoritem}
 
 Genetski algoritem je vrsta algoritma, ki temelji na Darwinovi ideji o razvoju vrst in preživetju najmočnejših. Zelo pomembno pa je, kako določimo, kdo je tu najmočnejši, zato se moramo primerno odločiti za kriterij, po katerem bomo to delali. V našem primeru smo se odločili za čim manjše neodvisnostno število.\\
 
 V našem primeru sva se odločila, da bo populacija rasla iz $zacetne\_populacija(maksimalna)$, kjer določimo začetno množico povezanih grafov. Z vrednostjo maksimalna smo določili največjo velikost generacije.\\
 Nato sva te grafe razvrstila po določenem kriteriju in določila možnosti mutacije "populacije", torej vsakega izmed grafov. Grafu lahko dodamo ali odstranimo povezavo in dodamo ali odstranimo vozlišče, na koncu pa jih lahko še križamo.\\
-Ko sva to naredila, sva najin program testirala.
+Ko sva to naredila, sva najin genetski algoritem testirala.
+\includegraphics{slike/cocalc}
+Test sva naredila na $10000$ generacijah, ki so bile lahko velike največ $10000$. Ker nam ta test ni vrnil izjeme predvidevava, da izjeme ni možno najti.
 \end{document}
