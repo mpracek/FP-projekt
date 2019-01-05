@@ -175,12 +175,18 @@ Genetski algoritem je vrsta algoritma, ki temelji na Darwinovi ideji o razvoju v
 
 V našem primeru sva se odločila, da bo populacija rasla iz $zacetne\_populacija(maksimalna)$, kjer določimo začetno množico povezanih grafov. Z vrednostjo maksimalna smo določili največjo velikost generacije.\\
 Nato sva te grafe razvrstila po določenem kriteriju in določila možnosti mutacije "populacije", torej vsakega izmed grafov. Grafu lahko dodamo ali odstranimo povezavo in dodamo ali odstranimo vozlišče, na koncu pa jih lahko še križamo.\\
-Ko sva to naredila, sva najin genetski algoritem testirala.\\
+\begin{figure}[h]
+	\includegraphics{slike/GA}
+\end{figure}
+\ \\
+
+Ko sva to naredila, sva najin genetski algoritem testirala.
+Test sva naredila na $10000$ generacijah, ki so bile lahko velike največ $10000$. Ker nam ta test ni vrnil izjeme predvidevava, da izjeme ni možno najti.\\
 \begin{figure}[h]
 	\includegraphics{slike/cocalc2}
 \end{figure}
+
 \ \\
-Test sva naredila na $10000$ generacijah, ki so bile lahko velike največ $10000$. Ker nam ta test ni vrnil izjeme predvidevava, da izjeme ni možno najti.\\
-\ \\
-Ker nas poleg uspešnosti kode navadno zanima tudi njena hitrost oziroma časovna zahtevnost, sva se tudi to odločila testirati. Odločila sva se za 
+Ker nas poleg uspešnosti kode navadno zanima tudi njena hitrost oziroma časovna zahtevnost, sva se tudi to odločila testirati. Odločila sva se za teste, ki bodo opisali odvisnost časa od števila generacij ter od največjega možnega števila osebkov v populaciji.\\
+Najprej sva testirala odvisnost
 \end{document}
