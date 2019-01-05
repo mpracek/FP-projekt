@@ -117,7 +117,7 @@ kjer je $G$ naš graf, $\alpha(G)$ je neodvisnostno število, $\lambda_{avg}$ pa
 \begin{figure}[h]
 	\centering
 
-	\includegraphics[scale=1]{slike/graf1}
+	\includegraphics[scale=0.8]{slike/graf1}
 \end{figure}
 
 Ves čas zahtevamo, da je graf \textbf{preprost in povezan}. Ta zahteva pomeni, da ne obstaja vozlišče, ki ne bi bilo sosednje vsaj enemu drugemu vozlišču,  med dvema povezavama obstaja kvečjemu ena povezava, poleg tega pa ne obstaja  povezava od vozlišča $v$ do vozlišča $v$, kar pomeni da ne obstajajo zanke na enem vozlišču.\\
@@ -163,7 +163,7 @@ Ta funkcija nam vrne povprečno lokalno neodvisnost.
 \subsection{Glavna funkcija}
 Glavna funkcija, s katero smo izvajali teste, je tako dobila končen izgled.
 \begin{figure}[h!]
-	\includegraphics[scale=0.7]{slike/preveri}
+	\includegraphics[scale=0.65]{slike/preveri}
 \end{figure}
 \ \\
 
@@ -173,10 +173,10 @@ Na ta način smo oblikovali funkcije, s katerimi smo testirali grafe. Za večje 
 
 Genetski algoritem je vrsta algoritma, ki temelji na Darwinovi ideji o razvoju vrst in preživetju najmočnejših. Zelo pomembno pa je, kako določimo, kdo je tu najmočnejši, zato se moramo primerno odločiti za kriterij, po katerem bomo to delali. V našem primeru smo se odločili za čim manjše neodvisnostno število.\\
 
-V našem primeru sva se odločila, da bo populacija rasla iz $zacetne\_populacija(maksimalna)$, kjer določimo začetno množico povezanih grafov. Z vrednostjo maksimalna smo določili največjo velikost generacije.\\
+V našem primeru sva se odločila, da bomo začetno populacija določili s pomočjo funkcije $zacetne\_populacija(maksimalna)$,  kjer določimo začetno množico povezanih grafov. Z vrednostjo maksimalna smo določili največjo velikost generacije.\\
 Nato sva te grafe razvrstila po določenem kriteriju in določila možnosti mutacije "populacije", torej vsakega izmed grafov. Grafu lahko dodamo ali odstranimo povezavo in dodamo ali odstranimo vozlišče, na koncu pa jih lahko še križamo.\\
 \begin{figure}[h]
-	\includegraphics[scale=0.65]{slike/GA}
+	\includegraphics[scale=0.6]{slike/GA}
 \end{figure}
 \ \\
 
@@ -190,7 +190,7 @@ Test sva naredila na $10000$ generacijah, ki so bile lahko velike največ $10000
 Ker nas poleg uspešnosti kode navadno zanima tudi njena hitrost oziroma časovna zahtevnost, sva se tudi to odločila testirati. Odločila sva se za teste, ki bodo opisali odvisnost časa od števila generacij ter od največjega možnega števila osebkov v populaciji.\\
 Najprej sva testirala odvisnost od parametra $konec$, torej števila generacij. Rezultat, ki sva ga dobila, nam je dal precej očiten rezultat.
 \begin{figure}[h]
-	\includegraphics[scale=1]{grafi/konec}
+	\includegraphics[scale=0.8]{grafi/konec}
 \end{figure}
 \ \\
 
